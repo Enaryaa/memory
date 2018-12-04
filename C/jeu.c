@@ -3,8 +3,8 @@
 #include<stdlib.h>
 #include<graph.h>
 
-const longueurImage 60;
-const largeurImage 50;
+#define longueurImage 60;
+#define largeurImage 50;
 
 struct card
 {
@@ -13,6 +13,7 @@ struct card
   int y;
   int isReturned;
 };
+
 int main(int argc, char * argv[]){ 
 
 /*ces valeurs ici on été ajouté pour l'exemple , il fautdra placer les 24 sprites*/
