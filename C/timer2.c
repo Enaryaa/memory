@@ -1,17 +1,27 @@
-#include<stdio.h>
-#include<stdlib.h>
-#include<grap.h>
+    #include<stdio.h>
+    #include<stdlib.h>
+    #include<graph.h>
+    #include<math.h>
 
-#define CYCLE 10000L
+    #define CYCLE 10000L
+    #define INFINI 1
 
-int main (void) {
-	unsigned long int us = Microsecondes();
-	unsigned long int seconde = 0;
+    int main(int argc, char * argv[])
+    {
+    	unsigned long Microsecondes();
+    	unsigned long suivant;
+    	int temps = 0;
 
-	unsigned long int suivant = Microsecondes()+CYCLE;
+    	suivant = Microsecondes();
 
-	while ()
-
-
-
-}
+    	while (INFINI == 1)
+    	{
+    		if (Microsecondes() > suivant)
+    		{
+    			suivant = ((Microsecondes()-CYCLE)*pow(10,-6));
+    			printf("%d", temps);
+    			temps++;
+    		}
+    	}
+    	return EXIT_SUCCESS;
+    }
