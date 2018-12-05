@@ -43,9 +43,10 @@ int main(int argc, char * argv[]){
   CreerFenetre(10,10,(longueurImage*4 + marge*4 + 4),(largeurImage*2 + marge*2 +4));
 
   int random = 0;
-  for (int i = 0; i < 2; i++)
+  int i, j;
+  for ( i = 0; i < 2; i++)
   {    
-    for (int j = 0; j < 4; j++)
+    for ( j = 0; j < 4; j++)
     {
       struct card current = { "", x, y, 0 };
       tableau[i][j] = current;
@@ -53,7 +54,7 @@ int main(int argc, char * argv[]){
       int sprite = ChargerSprite(randomize[random]);
       AfficherSprite(sprite, x, y);
       
-      //ChargerImage(randomize[random], x, y, x + longueurImage, y + largeurImage, longueurImage, largeurImage);
+      /*ChargerImage(randomize[random], x, y, x + longueurImage, y + largeurImage, longueurImage, largeurImage);*/
       x = x + marge +longueurImage;
       random = random + 1;
       /*a ce moment là, on peut afficher les images mais face caché*/
@@ -62,10 +63,7 @@ int main(int argc, char * argv[]){
     y = y + marge + largeurImage;
   }
 
-  int touche;
-  while(touche != 113) {
-    touche = Touche();
-  }
+
   FermerGraphique();
 
   return EXIT_SUCCESS;
