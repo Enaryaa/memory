@@ -1,14 +1,42 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<graph.h>
+#include<math.h>
 
 #define longueurImage 95
 #define largeurImage 95
+#define CYCLE 100000L
 
 int goon = 0;
+int cartex = 8;
+int cartey = 6;
 /* charger tous les sprites au debut afin d'avoir des identifiants pour chaque sprite -> avoir des int 
 à la place des char et avec le pointeur, savoir si on clique sur les memes cartes quand on les retourne 
 (condition de victoire) */
+void timer(void)
+    {
+ 
+unsigned long Microsecondes(), temps;
+char buf[100];
+int seconde;
+int go_on == 0;
+
+InitialiserGraphique();   /*créer la fenetre */
+CreerFenetre(200,190,1280,720);
+
+temps = Microsecondes() + CYCLE;
+
+while (go_on = 0)
+{
+  
+if (Microsecondes()>temps){
+seconde++; 
+temps = (Microsecondes()+CYCLE);
+snprintf(buf,100,"temps : %d",seconde);
+        }
+      }
+
+    }
 
 struct card
 {
@@ -37,44 +65,35 @@ int main(int argc, char * argv[]){
   int y = marge;
 
   /* ce tableau doit être rempli grace au tableau randomize pour chaque carte */
-  struct card tableau[5][3];
+  struct card tableau[8][6];
   /*on défini une cle pour pour recuperer le sprite de la liste aleatoire,
    il sera incrmenté dans la seoncde boucle for*/
   InitialiserGraphique();
-  CreerFenetre(300,300,(longueurImage*4 + marge*4 + 20),(largeurImage*2 + marge*2 +20));
-
+  CreerFenetre(200,200,(longueurImage*8 + marge*8 + 40),(largeurImage*6 + marge*6 +40));
+  timer();
   int random = 0;
   int i, j;
 
-  while(!SourisCliquee()){
 
-  for ( i = 0; i < 2; i++)
+
+  for ( i = 0; i < 6; i++)
   {    
-    for ( j = 0; j < 4; j++)
+    for ( j = 0; j < 8; j++)
     {
       struct card current = {"", x, y, 0 };
       tableau[i][j] = current;
       DessinerRectangle(x, y,longueurImage, largeurImage);
       int sprite = ChargerSprite(randomize[random]);
       AfficherSprite(sprite, x, y);
-      
       /*ChargerImage(randomize[random], x, y, x + longueurImage, y + largeurImage, longueurImage, largeurImage);*/
       x = x + marge +longueurImage;
       random = random + 1;
-      /*a ce moment là, on peut afficher les images mais face caché*/
-      
-      if((SourisCliquee()) &&(_X >= marge) && (_X <= longueurImage + marge) && (_Y >= marge) && (_Y <= largeurImage + marge)){
-          RemplirRectangle(x, y,longueurImage, largeurImage);
-         
+      /*a ce moment là, on peut afficher les images mais face caché*/    
     }
     x = marge; 
     y = y + marge + largeurImage;
   }
 
-
-      }
-    
-}
 
 
 Touche();

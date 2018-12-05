@@ -3,25 +3,31 @@
     #include<graph.h>
     #include<math.h>
 
-    #define CYCLE 10000L
-    #define INFINI 1
+    #define CYCLE 100000L
 
-    int main(int argc, char * argv[])
+
+    void timer(void)
     {
-    	unsigned long Microsecondes();
-    	unsigned long suivant;
-    	int temps = 0;
+    	
+    	unsigned long Microsecondes(), temps;
+    	char buf[100];
+    	int seconde;
+  		int go_on == 0;
 
-    	suivant = Microsecondes();
+		InitialiserGraphique();   /*créer la fenetre */
+		CreerFenetre(200,190,1280,720);
 
-    	while (INFINI == 1)
+    	temps = Microsecondes() + CYCLE;
+
+    	while (go_on = 0)
     	{
-    		if (Microsecondes() > suivant)
-    		{
-    			suivant = ((Microsecondes()-CYCLE)*pow(10,-6));
-    			printf("%d", temps);
-    			temps++;
+  
+    		if (Microsecondes()>temps){
+    			seconde++; 
+    			temps = (Microsecondes()+CYCLE);
+    			snprintf(buf,100,"temps : %d",seconde);
     		}
     	}
-    	return EXIT_SUCCESS;
+
     }
+/*-CYCLE)*pow(10,-6));*/
