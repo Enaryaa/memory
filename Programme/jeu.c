@@ -56,11 +56,11 @@ int main(int argc, char * argv[]){
   /* rappel : ne pas oublier de définir la constante des longueurs d'image*/
   /*struct card heart = {"heart.png", 10, 20, 0};*/
   /*ici on applique une marge pour afficher une belle grille avec les images*/
-int marge = 30;
+  int marge = 30;
   /*ici on défini la première position x*/
-int x = marge;
+  int x = marge;
   /*de même pour y*/
-int y = 55;
+  int y = 55;
 
 
   /* ce tableau doit être rempli grace au tableau randomize pour chaque carte */
@@ -69,22 +69,18 @@ int y = 55;
    il sera incrmenté dans la seoncde boucle for*/
   InitialiserGraphique();
   CreerFenetre(100,25,(longueurImage*8 + marge*8 + 20),(largeurImage*6 + marge*6 +55));
-  
-  while(goon == 1){
-
-    timer();
-    int random = 0;
-    int i, j;
+  int random = 0;
+  int i, j;
 
     for ( i = 0; i < 6; i++)
     {    
       for ( j = 0; j < 8; j++)
       {
-        struct card current = {"", x, y, 0 };
+        struct card current = {randomize[random], x, y, 0 }; /*initialiser la structure en cours*/
         tableau[i][j] = current;
         DessinerRectangle(x, y,longueurImage, largeurImage);
-        int sprite = ChargerSprite(randomize[random]);
-        AfficherSprite(sprite, x, y);
+        /*int sprite = ChargerSprite(randomize[random]);
+        AfficherSprite(sprite, x, y);*/
         /*ChargerImage(randomize[random], x, y, x + longueurImage, y + largeurImage, longueurImage, largeurImage);*/
         x = x + marge +longueurImage;
         random = random + 1;
@@ -94,6 +90,34 @@ int y = 55;
       y = y + marge + largeurImage;
     }
 
+  while(goon == 1){
+
+    /*timer();*/
+    
+if(SourisCliquee()){
+  printf(" X: %d\n", _X );
+  printf(" Y : %d\n", _Y);
+      for (int posy = 0; posy < 6; posy++ ){
+        for(int posx = 0; posx < 8; posx++){
+          struct card mcard = tableau[posx][posy]; 
+ /*récupère la structure de chaque carte pr ensuite utuliser les pos*/
+          printf("mcard X : %d\n", mcard.x);
+          printf(" mcard Y : %d\n", mcard.y);
+
+          if( ( mcard.x <= _X ) && (mcard.x + longueurImage >= _X ) 
+            && (mcard.y <= _Y) && (mcard.y + largeurImage >= _Y)){
+/*  le clique se trouve dans la zone où se trouve une carte */
+              int sprite = ChargerSprite(mcard.sprite);
+              AfficherSprite(sprite, mcard.x, mcard.y);
+              printf("toto" );
+
+/*si le clique se trouve sur la position d'une carte, charge une image*/
+          }
+
+        }
+
+      }
+}
 }
 
 Touche();

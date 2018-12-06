@@ -11,7 +11,7 @@
         
         unsigned long Microsecondes(), temps;
         char buf[100];
-        int seconde = 0;
+        int seconde = 0;        /*initialise seconde à 0 pour commencer le temps à partir de 0*/
         int goon = 1;
 
         InitialiserGraphique();   /*créer la fenetre */
@@ -23,9 +23,9 @@
         {
   
             if (Microsecondes()>temps){
-                seconde++; 
+                seconde++;                              /* compte le nombre de seconde*/
                 temps = (Microsecondes()+CYCLE);
-                EffacerEcran(CouleurParNom("White"));
+                EffacerEcran(CouleurParNom("White")); /*permet de rafraichir l'ecran*/
                 EcrireTexte(100,100,buf,0);
                 snprintf(buf,100,"temps : %0d",seconde);
             }
