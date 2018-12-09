@@ -76,7 +76,7 @@ int main(int argc, char * argv[]){
     {    
       for ( j = 0; j < 8; j++)
       {
-        struct card current = {randomize[random], x, y, 0 }; /*initialiser la structure en cours*/
+        struct card current = {"", x, y, 0 }; /*initialiser la structure en cours*/
         tableau[i][j] = current;
         DessinerRectangle(x, y,longueurImage, largeurImage);
         /*int sprite = ChargerSprite(randomize[random]);
