@@ -26,7 +26,6 @@ int goon = 1;
       if (Microsecondes()>temps){
           seconde++; 
           temps = (Microsecondes()+CYCLE);
-          EffacerEcran(CouleurParNom("White"));
           EcrireTexte(((longueurImage*8 + 30*8 + 20)/2),30,buf,1);
           snprintf(buf,100,"Temps : %0d",seconde);
       }
@@ -51,7 +50,8 @@ int main(int argc, char * argv[]){
   char sprite[4][24] = { "../Image/carte1.png", "../Image/carte2.png", "../Image/carte3.png", "../Image/carte4.png"};
 
   /* liste aleatoire ICI il faut que ce tableau soit généré aleatoirement avec chaque carte en deux exemplaire*/
-  char randomize[8][50] = {"../Image/carte1.png", "../Image/carte2.png", "../Image/carte3.png", "../Image/carte4.png" "../Image/carte1.png", "../Image/carte2.png", "../Image/carte3.png", "../Image/carte4.png"};
+  char randomize[8][50] = {"../Image/carte1.png", "../Image/carte2.png", "../Image/carte3.png", "../Image/carte4.png", 
+  "../Image/carte1.png", "../Image/carte2.png", "../Image/carte3.png", "../Image/carte4.png"};
 
   /* rappel : ne pas oublier de définir la constante des longueurs d'image*/
   /*struct card heart = {"heart.png", 10, 20, 0};*/
@@ -89,10 +89,11 @@ int main(int argc, char * argv[]){
       x = marge; 
       y = y + marge + largeurImage;
     }
+  }
 
-  while(goon == 1){
+ while(goon == 1){
 
-    /*timer();*/
+    timer();
     
 if(SourisCliquee()){
   printf(" X: %d\n", _X );
