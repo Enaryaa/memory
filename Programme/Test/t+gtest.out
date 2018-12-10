@@ -3,18 +3,18 @@
 #include<graph.h>
 #include<math.h>
 
-#define CYCLE 1000000L
 #define longueurImage 95
 #define largeurImage 95
+#define CYCLE 1000000L
+#define cartex 4
+#define cartey 4
 
-
-    void timer(void)
+void timer(void)
     {
         
         unsigned long Microsecondes(), temps;
         char buf[100];
         int seconde = 0;        /*initialise seconde à 0 pour commencer le temps à partir de 0*/
-        int goon = 1;
 
         InitialiserGraphique();   /*créer la fenetre */
         CreerFenetre(200,190,1280,720);
@@ -25,21 +25,43 @@
         {
   
             if (Microsecondes()>temps){
+            	ChoisirEcran(1);
+            	CopierZone(2,1,0,0,800,500,0,0);
                 seconde++;                              /* compte le nombre de seconde*/
                 temps = (Microsecondes()+CYCLE);
-                EffacerEcran(CouleurParNom("White")); /*permet de rafraichir l'ecran*/
                 EcrireTexte(((longueurImage*8 + 30*8 + 20)/2),30,buf,1);
                 snprintf(buf,100,"temps : %5d",seconde);
+                CopierZone(1,0,0,0,800,500,0,0);
             }
         }
 
     }
 
-int main (void) 
-{
-    timer();
+int main(void){
+	int marge = 30; 
+	int x = marge;
+	int y = 70; 
+	int i, j;
+	int goon = 1;
 
-    return EXIT_SUCCESS;
+InitialiserGraphique();
+CreerFenetre(10,25,800,500);
+ChoisirEcran(2);
+
+timer();
+	for( i = 0; i < cartex; i++  ){
+		for (j = 0; j < cartey; j++){
+			int sprite = ChargerSprite("../../Image/carte1.png");
+			AfficherSprite(sprite, x, y);
+			x = x + marge + longueurImage;
+		}
+		x = marge;
+		y = y + marge + largeurImage;
+
+	}
+
+Touche();
+FermerGraphique();
+
+	return EXIT_SUCCESS;
 }
-            /*temps = ((Microsecondes()-CYCLE)*pow(10,-6));
-            printf("%d\n", temps);*/

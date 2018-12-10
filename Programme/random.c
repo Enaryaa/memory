@@ -50,8 +50,8 @@ int main(void) {
   }
 
   /*for (i = 0; i < SPRITE_RAND_SIZE; i ++) {
-      printf("%s\n", spritesRand[i]);
-  }*/
+      printf("%s\n", spritesRand[i]);*/
+  }
 
 
 /* le premier for test toutes les valeurs de sprite[], à la position 0 il va entrer dans le 2e for
