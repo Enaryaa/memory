@@ -20,9 +20,7 @@ void timer(void)
          snprintf(buf,100,"temps : %5d",seconde);
          EcrireTexte(((longueurImage*8 + 30*8 + 20)/2),30,buf,1);
          CopierZone(1,0,0,0,800,500,0,0);
-
-
-    }
+}
 
 int main(void){
 	int marge = 30; 
@@ -49,8 +47,6 @@ for( i = 0; i < cartex; i++  ){
 		}
 		x = marge;
 		y = y + marge + largeurImage;
-
-	
 
 	if (Microsecondes() >temps){
 		seconde++;

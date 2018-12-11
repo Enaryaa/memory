@@ -18,9 +18,11 @@ int marge = 30;
 int x = marge;
 int y = 70; 
 int i, j;
+int goon = 1;
 
 InitialiserGraphique();
 CreerFenetre(10,25,1200,700); 
+
 
 int sprite[12] = {
 ChargerSprite("../../Image/carte1.png"),
@@ -36,8 +38,12 @@ ChargerSprite("../../Image/carte10.png"),
 
 };
 
+int sprite2 = ChargerSprite("../../Image/back.png");
+
 int spritesRand[SPRITE_RAND_SIZE];
-  
+
+
+ 
   for (i = 0; i < SPRITE_RAND_SIZE; i ++) {     /*incremente le tableau random de 0*/
     spritesRand[i] = 0;
   }
@@ -58,21 +64,58 @@ int spritesRand[SPRITE_RAND_SIZE];
     }
   }
 
+  
 int grillerand[4][5];
 
 int ligne, colonne;
 i = 0;
 
 for ( ligne = 0; ligne < 4; ligne++ ){
+
   for (colonne = 0; colonne < 5; colonne++){
+
     grillerand[ligne][colonne] = spritesRand[i];
+
     AfficherSprite(spritesRand[i],x, y);
+    AfficherSprite(sprite2, x, y);
+
     x = x + marge + longueurImage;
+
     i++;
-      printf("%d\n", i);
+
   }
+
   x = marge;
+
   y = y + marge + largeurImage;
+
+}
+ 
+while(goon == 1){
+
+ if (SourisCliquee())
+ {
+    for(ligne = 0, x = 30; ligne < 4; ligne++ )
+    {
+      for(colonne = 0, y = 70; colonne < 5; colonne++)
+      {
+        if ( (_X >= x) && (_X <= x + longueurImage) && (_Y >= y) && (_Y <= y + largeurImage))
+        {
+          
+          LibererSprite(sprite2);
+          goon = 0;
+        }
+
+        x = x + marge + longueurImage;
+
+      }
+      x = marge;
+
+      y = y + marge + largeurImage;
+
+    }
+
+  }
 }
 
 
