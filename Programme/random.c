@@ -6,23 +6,26 @@
 #define largeurImage 95
 #define CYCLE 1000000L
 
-int main(void) {
-  srand(time(NULL));
+int main(void/*int cartex, int cartey*/) {
+srand(time(NULL));
 
-const int SPRITE_SIZE = 10, 
-SPRITE_RAND_SIZE = 20,  /*ou SPRITE_SIZE * 2 */
-TWO_CARD = 2,
-MAX = 20, 
-MIN = 0;
-int marge = 30; 
-int x = marge;
-int y = 70; 
-int i, j;
+int cartex = 4,
+cartey = 5,
+SPRITE_RAND_SIZE = cartex * cartey,
+SPRITE_SIZE = SPRITE_RAND_SIZE/2,
+MAX = SPRITE_RAND_SIZE,
+MIN = 0,
+marge = 40, 
+x = marge,
+y = 70,
+i, 
+j;
 
 InitialiserGraphique();
-CreerFenetre(10,25,1200,700); 
+CreerFenetre(10,25,(longueurImage*cartey + marge*cartey + 20),(largeurImage*cartex + marge*cartex +55));
+ChargerImageFond("../../Image/fond.png");
 
-int sprite[12] = {
+int sprite[12] = {  /*créer le tableau contenant les sprites*/
 ChargerSprite("../../Image/carte1.png"),
 ChargerSprite("../../Image/carte2.png"),
 ChargerSprite("../../Image/carte3.png"),
@@ -36,36 +39,37 @@ ChargerSprite("../../Image/carte10.png"),
 
 };
 
-int spritesRand[SPRITE_RAND_SIZE];
+int spritesRand[SPRITE_RAND_SIZE]; /*tableau destiné a accueillir les valeurs random de sprite*/
   
   for (i = 0; i < SPRITE_RAND_SIZE; i ++) {     /*incremente le tableau random de 0*/
+    
     spritesRand[i] = 0;
   }
 
   for (i = 0; i < SPRITE_SIZE; i++) {  /*boucle dans le tab des sprites pour garder le sprite courant*/
-    /*printf("%d\n", i);*/
     int current = sprite[i];
-    /*printf("%s\n", current);*/
-    for (j = 0; j < TWO_CARD;) {  /*sort de la boucle si le currentsprite a été placé 2fois dans le tab rand*/
-      int randKey = (rand() % (MAX - MIN) + MIN);
-      /*printf("%d\n", randKey);
-      printf("%s\n", spritesRand[randKey]);*/
-      if (spritesRand[randKey] == 0) {  /*le curseur cherche aléatoirement un espace dans le tab*/
-        spritesRand[randKey] = current;
-        /*rintf("%s\n", spritesRand[randKey]);*/
-        j++;
+
+    for (j = 0; j < 2; ) {  /*sort de la boucle si le currentsprite a été placé 2fois dans le tab rand*/
+      
+      int ran = (rand() % (MAX - MIN) + MIN);
+
+      if (spritesRand[ran] == 0) {  /*le curseur cherche aléatoirement un espace dans le tab*/
+         
+         spritesRand[ran] = current;
+
+         j++;
       }
     }
   }
 
-int grillerand[4][5];
+int grillerand[cartex][cartey];
 
 int ligne, colonne;
 i = 0;
 
-for ( ligne = 0; ligne < 4; ligne++ ){
+for ( ligne = 0; ligne < cartex; ligne++ ){
 
-  for (colonne = 0; colonne < 5; colonne++){
+  for (colonne = 0; colonne < cartey; colonne++){
 
     grillerand[ligne][colonne] = spritesRand[i];
 
