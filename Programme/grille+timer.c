@@ -27,7 +27,7 @@ int goon = 1;
           seconde++; 
           temps = (Microsecondes()+CYCLE);
           EcrireTexte(((longueurImage*8 + 30*8 + 20)/2),30,buf,1);
-          snprintf(buf,100,"Temps : %0d",seconde);
+          snprintf(buf,100,"Temps : %05d",seconde);
       }
         
 
@@ -37,10 +37,7 @@ int goon = 1;
 
 struct card
 {
- /* int id;*/
-  char sprite[24];
-  int x;
-  int y;
+  int id;
   int isReturned;
 };
 
