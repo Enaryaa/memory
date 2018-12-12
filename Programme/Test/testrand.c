@@ -64,7 +64,7 @@ int spritesRand[SPRITE_RAND_SIZE];
     }
   }
 
-  
+
 int grillerand[4][5];
 
 int ligne, colonne;
@@ -76,12 +76,9 @@ for ( ligne = 0; ligne < 4; ligne++ ){
 
     grillerand[ligne][colonne] = spritesRand[i];
 
-    AfficherSprite(spritesRand[i],x, y);
     AfficherSprite(sprite2, x, y);
 
     x = x + marge + longueurImage;
-
-    i++;
 
   }
 
@@ -93,20 +90,31 @@ for ( ligne = 0; ligne < 4; ligne++ ){
  
 while(goon == 1){
 
- if (SourisCliquee())
- {
+  if(SourisCliquee()){
+
     for(ligne = 0, x = 30; ligne < 4; ligne++ )
     {
+      printf("%d ligne\n", ligne);
+      i++;
       for(colonne = 0, y = 70; colonne < 5; colonne++)
       {
-        if ( (_X >= x) && (_X <= x + longueurImage) && (_Y >= y) && (_Y <= y + largeurImage))
+        printf("%d colonne\n", colonne);
+        
+        x = x + marge + longueurImage;
+
+        i++;
+        
+        if ((_X >= x) && (_X <= x + longueurImage) && (_Y >= y) && (_Y <= y + largeurImage))
         {
           
-          LibererSprite(sprite2);
-          goon = 0;
+          AfficherSprite(spritesRand[i],x, y);
+          goon = 1;
+          printf("why\n");
         }
-
-        x = x + marge + longueurImage;
+       /* else if ((_X >= x) && (_X <= x + longueurImage) && (_Y >= y) && (_Y <= y + marge + largeurImage)){
+*/
+        }
+       
 
       }
       x = marge;
@@ -120,31 +128,9 @@ while(goon == 1){
 
 
 
-
-
-
-
-/*for( i = 0; i < 5; i++){
-    for (j = 0; j < 5; j++){
-      AfficherSprite(spritesRand[j], x, y);
-      x = x + marge + longueurImage;
-  printf("%d", j);
-    }
-    AfficherSprite(spritesRand[i], x, y);
-    x = marge;
-    y = y + marge + largeurImage;
-    printf("%d", i);
-  }*/
-
-
-
-
 Touche();
 FermerGraphique();
 
-  /*for (i = 0; i < SPRITE_RAND_SIZE; i ++) {
-      printf("%s\n", spritesRand[i]);*/
-  
 
 
 /* le premier for test toutes les valeurs de sprite[], à la position 0 il va entrer dans le 2e for
