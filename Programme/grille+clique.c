@@ -6,60 +6,60 @@
 #define largeurImage 95
 #define CYCLE 1000000L
 
-int main(void) {
-  srand(time(NULL));
+int main(void/*int cartex, int cartey*/) {
+srand(time(NULL));
 
-const int SPRITE_SIZE = 10, 
-SPRITE_RAND_SIZE = 20,  /*ou SPRITE_SIZE * 2 */
-TWO_CARD = 2,
-MAX = 20, 
-MIN = 0;
-int marge = 30; 
-int x = marge;
-int y = 70; 
-int i, j;
-int goon = 1;
+int cartex = 4,
+cartey = 5,
+SPRITE_RAND_SIZE = cartex * cartey,
+SPRITE_SIZE = SPRITE_RAND_SIZE/2,
+MAX = SPRITE_RAND_SIZE,
+MIN = 0,
+marge = 40, 
+x = marge,
+y = 70,
+i, 
+j,
+goon = 1;
 
 InitialiserGraphique();
-CreerFenetre(10,25,1200,700); 
+CreerFenetre(10,25,(longueurImage*cartey + marge*cartey + 20),(largeurImage*cartex + marge*cartex +55));
+ChargerImageFond("../Image/fond.png");
 
-
-int sprite[12] = {
-ChargerSprite("../../Image/carte1.png"),
-ChargerSprite("../../Image/carte2.png"),
-ChargerSprite("../../Image/carte3.png"),
-ChargerSprite("../../Image/carte4.png"),
-ChargerSprite("../../Image/carte5.png"),
-ChargerSprite("../../Image/carte6.png"),
-ChargerSprite("../../Image/carte7.png"),
-ChargerSprite("../../Image/carte8.png"),
-ChargerSprite("../../Image/carte9.png"),
-ChargerSprite("../../Image/carte10.png"),
-
+int sprite[12] = {  /*créer le tableau contenant les sprites*/
+ChargerSprite("../Image/carte1.png"),
+ChargerSprite("../Image/carte2.png"),
+ChargerSprite("../Image/carte3.png"),
+ChargerSprite("../Image/carte4.png"),
+ChargerSprite("../Image/carte5.png"),
+ChargerSprite("../Image/carte6.png"),
+ChargerSprite("../Image/carte7.png"),
+ChargerSprite("../Image/carte8.png"),
+ChargerSprite("../Image/carte9.png"),
+ChargerSprite("../Image/carte10.png"),
 };
 
-int sprite2 = ChargerSprite("../../Image/back.png");
+int sprite2 = ChargerSprite("../Image/back.png");
 
-int spritesRand[SPRITE_RAND_SIZE];
-
-
- 
+int spritesRand[SPRITE_RAND_SIZE]; /*tableau destiné a accueillir les valeurs random de sprite*/
+  
   for (i = 0; i < SPRITE_RAND_SIZE; i ++) {     /*incremente le tableau random de 0*/
+    
     spritesRand[i] = 0;
   }
 
   for (i = 0; i < SPRITE_SIZE; i++) {  /*boucle dans le tab des sprites pour garder le sprite courant*/
-    /*printf("%d\n", i);*/
     int current = sprite[i];
-    /*printf("%s\n", current);*/
-    for (j = 0; j < TWO_CARD;) {	/*sort de la boucle si le currentsprite a été placé 2fois dans le tab rand*/
-      int randKey = (rand() % (MAX - MIN) + MIN);
-      /*printf("%d\n", randKey);
-      printf("%s\n", spritesRand[randKey]);*/
-      if (spritesRand[randKey] == 0) {	/*le curseur cherche aléatoirement un espace dans le tab*/
-        spritesRand[randKey] = current;
-        /*rintf("%s\n", spritesRand[randKey]);*/
-        j++;
+
+    for (j = 0; j < 2; ) {  /*sort de la boucle si le currentsprite a été placé 2fois dans le tab rand*/
+      
+      int ran = (rand() % (MAX - MIN) + MIN);
+
+      if (spritesRand[ran] == 0) {  /*le curseur cherche aléatoirement un espace dans le tab*/
+         
+         spritesRand[ran] = current;
+
+         j++;
       }
     }
   }
@@ -80,6 +80,7 @@ for ( ligne = 0; ligne < 4; ligne++ ){
 
     x = x + marge + longueurImage;
 
+    i++;
   }
 
   x = marge;
@@ -89,36 +90,29 @@ for ( ligne = 0; ligne < 4; ligne++ ){
 }
  
 while(goon == 1){
+  int i =0;
+  x = marge;
+  y = 70;
 
   if(SourisCliquee()){
 
-    for(ligne = 0, x = 30; ligne < 4; ligne++ )
+    for(ligne = 0; ligne < 4; ligne++ )
     {
-      printf("%d ligne\n", ligne);
-      i++;
-      for(colonne = 0, y = 70; colonne < 5; colonne++)
+    
+      for(colonne = 0; colonne < 5; colonne++)
       {
-        printf("%d colonne\n", colonne);
-        
-        x = x + marge + longueurImage;
-
-        i++;
         
         if ((_X >= x) && (_X <= x + longueurImage) && (_Y >= y) && (_Y <= y + largeurImage))
         {
           
           AfficherSprite(spritesRand[i],x, y);
           goon = 1;
-          printf("why\n");
         }
-       /* else if ((_X >= x) && (_X <= x + longueurImage) && (_Y >= y) && (_Y <= y + marge + largeurImage)){
-*/
-        }
-       
+        x = x + marge + longueurImage;
+        i++;
 
       }
       x = marge;
-
       y = y + marge + largeurImage;
 
     }
