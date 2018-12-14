@@ -19,15 +19,6 @@ void grille1();
 void grille2();
 void grille3();
 
-struct card
-{
- /* int id;*/
-  char sprite[24];
-  int x;
-  int y;
-  int isReturned;
-};
-
 int goon = 0;
 
 void regle(void){
