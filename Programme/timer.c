@@ -30,6 +30,7 @@
                 EffacerEcran(CouleurParNom("White")); /*permet de rafraichir l'ecran*/
                 EcrireTexte(((longueurImage*8 + 30*8 + 20)/2),30,buf,1);
                 snprintf(buf,100,"temps : %5d",seconde);
+                printf("%d", seconde);
             }
         }
 
