@@ -1,122 +1,86 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<graph.h>
+#include<math.h>
+#include<time.h>
+#include<unistd.h>
 
 #define longueurImage 95
 #define largeurImage 95
-#define marge 30
-
-int x = 30;
-int y = 55;
-/*j'ai eu des soucis avec x = marge alors j'ai defini x avec la meme valeur que marge*/
-
-void menu();
-void facile();
-void normal();
-void difficile();
-void regle();
-void grille1();
-void grille2();
-void grille3();
-
+#define marge 40
+#define CYCLE 1000000L
 int goon = 0;
 
-void regle(void){
+/*void Retour(void);
+void Victoire(void);*/
+void Menu(void);  /*affiche le menu principal*/
+void Facile(void); /*permet de selectionner la grille facile*/
+void Normal(void); 
+void Difficile(void);
+void Regle(void); /*affiche une fenetre avec les règles du jeu*/
+void Grille(int cartex, int cartey); /*initialise la grille de jeu en fonction
+ de la difficulté avec des tailles différentes*/
+
+
+
+void Regle(void){
 	goon = 4;
 	while(goon == 4)
-	{
-		while (!SourisCliquee())
-		{
-			ChargerImageFond("../Image/regle22.png");
-			/*image de fond a redimensionner pour un truc propre*/
-			DessinerRectangle(700,563,100,63);
-			SourisCliquee();
-			if ( (_X >= 700) && (_X <= 800) && (_Y >= 563) && (_Y <= 616) )
-				/*bouton a ajouter en sprite*/
-			{
-				goon = 0;
-				menu();
-			}
-		}
-	}
+  {
+    while (!SourisCliquee())
+    {
+      ChargerImageFond("../Image/regle22.png");
+      DessinerRectangle(950,563,100,63);
+      SourisCliquee();
+      if ( (_X >= 950) && (_X <= 1050) && (_Y >= 563) && (_Y <= 616) )
+        /*bouton a ajouter en sprite*/
+      {
+        goon = 0;
+        Menu();
+      }
+    }
+  }
 }
 
-void facile(int cartex, int cartey)
+void Facile()
 {
 	goon = 1; /*grille facile*/
 	FermerGraphique();
-	InitialiserGraphique();
-  	CreerFenetre(100,25,(longueurImage*5 + marge*5 + 20),(largeurImage*5 + marge*5 +55));
-  	/*j'ai défini ici la taille de la fenetre lorsqu'on lance facile, cela permet d'avoir une page 
-  	propre sans avoir besoin de changer la taille des sprites, je trouve ca plus simple*/
-	ChargerImageFond("../Image/fond.png");
-	grille1();
-	while(goon == 1)
-	{
-		while (!SourisCliquee())
-		{
-			DessinerRectangle(700,563,100,63);
-			SourisCliquee();
-			if ( (_X >= 700) && (_X <= 800) && (_Y >= 563) && (_Y <= 616) )
-			{
-				goon = 0;
-				menu();
-			}
-		}
-	}
+	InitialiserGraphique(); 
+	Grille(4,5);
+	
 }
 
-void normal(int cartex, int cartey)
+void Normal()
 {
 	goon = 2; /*grille normal*/
-	ChargerImageFond("../Image/fond.png");
-	/*grille2();*/
-	while(goon == 2)
-	{
-		while (!SourisCliquee())
-		{
-			DessinerRectangle(700,563,100,63);
-			SourisCliquee();
-			if ( (_X >= 700) && (_X <= 800) && (_Y >= 563) && (_Y <= 616) )
-			{
-				goon = 0;
-				menu();
-			}
-		}
-	}
+	FermerGraphique();
+	InitialiserGraphique();
+	Grille(5,6);
+	
 }
 
-void difficile(int cartex, int cartey){
+void Difficile(){
 	goon = 3;/*grille difficile*/
-	ChargerImageFond("../Image/fond.png");
-	/*grille3();*/
-	while(goon == 3)
-	{
-		while (!SourisCliquee())
-		{
-			DessinerRectangle(700,563,100,63);
-			SourisCliquee();
-			if ( (_X >= 700) && (_X <= 800) && (_Y >= 563) && (_Y <= 616) )
-			{
-				goon = 0;
-				menu();
-			}
-		}
-	}
+	FermerGraphique();
+	InitialiserGraphique();
+	Grille(5,8);
+	
+	
 }
 
-void menu()
+void Menu()
 {
 
-	
+	InitialiserGraphique();   /*créer la fenetre */
+	CreerFenetre(10,25,1280,720);
+
 	ChargerImageFond("../Image/projet.png"); 
 
-	DessinerRectangle(770,350,63,63);
+	/*DessinerRectangle(770,350,63,63);
 	DessinerRectangle(620,445,63,63);
 	DessinerRectangle(810,555,63,63);
-	/* ces trois rectangles initialises les boutons de difficultés*/
-	DessinerRectangle(159,294,245,242);
-	/* ce rectangle initialise le bouton avec les regles du jeu*/
+	DessinerRectangle(159,294,245,242);*/
 	SourisPosition();
 		/*permet de connaitre la position actuelle du curseur */
 
@@ -124,161 +88,250 @@ void menu()
 	{
 	
 		SourisCliquee();
-		if ( (_X >= 770) && (_X <= 833) && (_Y >= 350) && (_Y <= 413) ) 
-		/*si l'utilisateur clique dans cette surface 
-		(qui correspond a un bouton) alors on ferme la fenetre actuelle pour en ouvrir 
-		une autre contenant les différentes grilles de jeu*/
+		if ( (_X >= 770) && (_X <= 833) && (_Y >= 350) && (_Y <= 413) ) /*si l'utilisateur clique dans cette surface 
+		(qui correspond a un bouton) alors on ferme la fenetre actuelle pour en ouvrir une autre contenant les différentes grilles de jeu*/
 		{
-			facile(4, 4);
+			Facile();
 		}
 		else if ( _X >= 620 && _X <= 683 && _Y >= 445 && _Y <= 508 )
 		{
-			normal(7, 5);
+			Normal();
 		}
 		else if ( _X >= 810 && _X <= 873 && _Y >= 555 && _Y <= 618 )
 		{
-			difficile(8, 6);
+			Difficile();
 		}
 		else if ( _X >= 159 && _X <= 404 && _Y >= 294 && _Y <= 586 )
 		{
-			regle();
+			Regle();
 			SourisCliquee();
 		}
 		/*else if*/
 	}
 }
 
-void grille1()
+void Grille(int cartex, int cartey)
 {
-	/*ces valeurs ici on été ajouté pour l'exemple , il fautdra placer les 24 sprites*/
-	char sprite[4][24] = { "../Image/carte1.png", "../Image/carte2.png", "../Image/carte3.png", "../Image/carte4.png"};
+  srand(time(NULL));
 
-  	/* liste aleatoire ICI il faut que ce tableau soit généré aleatoirement avec chaque carte en deux exemplaire*/
-  	char randomize[8][50] = {"../Image/carte1.png", "../Image/carte2.png", "../Image/carte3.png", "../Image/carte4.png" "../Image/carte1.png", "../Image/carte2.png", "../Image/carte3.png", "../Image/carte4.png"};
+  int seconde = 0; 
+  char buf[100];
+  /*initialise seconde à 0 pour commencer le temps à partir de 0*/
+  unsigned long temps;
 
-  	/* rappel : ne pas oublier de définir la constante des longueurs d'image*/
-  	/*struct card heart = {"heart.png", 10, 20, 0};*/
-  	/*ici on applique une marge pour afficher une belle grille avec les images*/
-	/*int marge = 30;*/
- 	 /*ici on défini la première position x*/
-	
+  int goon = 1;
+ 
+  int spriterandsize = cartex * cartey,/*ça il a dit que ça ne servait a rien de le faire comme ça, il vaut mieux mettre directement les valeurs comme on connait d'avance la taille du tableau*/
+  spritesize = spriterandsize/2,/*suite à au-dessus : Il préfère qu'on utilise préfère pas de nom full Majuscule et "_" pour les noms de variables*/
+  MAX = spriterandsize,
+  MIN = 0,
+  x = marge,
+  y = 70,
+  i, 
+  j;
+
+  temps = Microsecondes() + CYCLE;
+
+  CreerFenetre(10,25,(longueurImage*cartey + marge*cartey + 20),(largeurImage*cartex + marge*cartex +55));
+  ChargerImageFond("../Image/fond.png");
 
 
-  	/* ce tableau doit être rempli grace au tableau randomize pour chaque carte */
-  	struct card tableau[5][5];
-  	/*on défini une cle pour pour recuperer le sprite de la liste aleatoire,
-  	 il sera incrmenté dans la seoncde boucle for*/
-  	/*InitialiserGraphique();
-  	CreerFenetre(100,25,(longueurImage*8 + marge*8 + 20),(largeurImage*6 + marge*6 +55));*/
+    int sprite[21] = {  /*créer le tableau contenant les sprites*/
+    ChargerSprite("../Image/carte1.png"),
+    ChargerSprite("../Image/carte2.png"),
+    ChargerSprite("../Image/carte3.png"),
+    ChargerSprite("../Image/carte4.png"),
+    ChargerSprite("../Image/carte5.png"),
+    ChargerSprite("../Image/carte6.png"),
+    ChargerSprite("../Image/carte7.png"),
+    ChargerSprite("../Image/carte8.png"),
+    ChargerSprite("../Image/carte9.png"),
+    ChargerSprite("../Image/carte10.png"),
+    ChargerSprite("../Image/carte11.png"),
+    ChargerSprite("../Image/carte12.png"),
+    ChargerSprite("../Image/carte13.png"),
+    ChargerSprite("../Image/carte14.png"),
+    ChargerSprite("../Image/carte15.png"),
+    ChargerSprite("../Image/carte16.png"),
+    ChargerSprite("../Image/carte17.png"),
+    ChargerSprite("../Image/carte18.png"),
+    ChargerSprite("../Image/carte19.png"),
+    ChargerSprite("../Image/carte20.png"),
+    ChargerSprite("../Image/carte21.png")
+    };
+
+
+    int sprite2 = ChargerSprite("../Image/back.png");
+
+    int spritesRand[spriterandsize]; /*tableau destiné a accueillir les valeurs random de sprite*/
+    
+    for (i = 0; i < spriterandsize; i ++)
+    {     /*incremente le tableau random de 0*/
+      
+      spritesRand[i] = 0;
+    }
+
+    for (i = 0; i < spritesize; i++)
+    {  /*boucle dans le tab des sprites pour garder le sprite courant*/
+      int current = sprite[i];
+      printf("sprite %d : %d\n", i, sprite[i] );
+
+
+      for (j = 0; j < 2; ) {  /*sort de la boucle si le currentsprite a été placé 2fois dans le tab rand*/
+        
+        int ran = (rand() % (MAX - MIN) + MIN);
+
+        if (spritesRand[ran] == 0)
+        {  /*le curseur cherche aléatoirement un espace dans le tab*/
+           
+          spritesRand[ran] = current;
+
+          j++;
+        }
+      }
+    }
+
+
+    int grillerand[cartex][cartey];
+
+    int ligne, colonne;
+    i = 0;
+
+    for ( ligne = 0; ligne < cartex; ligne++ )
+    {
+
+      for (colonne = 0; colonne < cartey; colonne++)
+      {
+
+        grillerand[ligne][colonne] = spritesRand[i];
+
+        AfficherSprite(sprite2, x, y);
+
+        x = x + marge + longueurImage;
+
+        i++;
+      }
+
+      x = marge;
+
+      y = y + marge + largeurImage;
+
+    }
+ int selection = 0, score = 0, selectionx = 0, selectiony = 0, ecran = 0;
+
+    while (goon == 1)
+    {
+ 
+    if (Microsecondes()>temps)
+    {
+      seconde++;
+      
+      ChoisirEcran(1);
+      EffacerEcran(CouleurParNom("White"));
+      ChargerImageFond("../Image/fond.png");
+      snprintf(buf,100,"temps : %5d",seconde);
+      EcrireTexte(70,30,buf,1);
+      CopierZone(1,0,0,0,500,70,0,0);
+      ChoisirEcran(0);
   
-  	while(goon == 1)
-  	{
-    	/*timer();*/
-	  	int random = 0;
-	    int i, j;
+      printf("%d\n", seconde);
+      temps = Microsecondes() + CYCLE;
+    }
 
-	    for ( i = 0; i < 5; i++)
-	    {    
-	    	for ( j = 0; j < 5; j++)
-      		{
-      			struct card current = {"", x, y, 0 };
-        		tableau[i][j] = current;
-        		/*DessinerRectangle(x, y,longueurImage, largeurImage);*/
-        		int sprite = ChargerSprite(randomize[random]);
-       			AfficherSprite(sprite, x, y);
-       			ChargerImage(randomize[random], x, y, x + longueurImage, y + largeurImage, longueurImage, largeurImage);
-        		x = x + marge +longueurImage;
-        		random = random + 1;
-        		/*a ce moment là, on peut afficher les images mais face caché*/    
-      		}
-      		x = 30; 
-      		y = y + marge + largeurImage;
-    	}
+    int i =0;
+    x = marge;
+    y = 70;
+
+    if(SourisCliquee())
+    {
+
+
+      for(ligne = 0; ligne < cartex; ligne++ )
+      {
+      
+        for(colonne = 0; colonne < cartey; colonne++)
+        {
+          
+          if ((_X >= x) && (_X <= x + longueurImage) && (_Y >= y) && (_Y <= y + largeurImage))
+          {
+            AfficherSprite(spritesRand[i],x, y);
+            sleep(1); /*mise en veille du programme de 1sec pour la seconde selection, permet de le voir*/
+            printf("clique %d,%d : %d\n", x, y, spritesRand[i] );
+            if(selection == 0){ /*stocke la valeur du clique dans selection, ses coordonnées dans selectionx et selectiony*/
+              selection = spritesRand[i];
+              selectionx = x;
+              selectiony = y;
+            }
+            else {
+              if(selection == spritesRand[i] && (selectionx != x || selectiony != y) ){ /*si le second clique rempli ses conditions alors on a trouvé une paire*/
+                  score++;  /*le score s'incrémente jusqu'a avoir trouvé les 10paires (ici) donc si score == 10, goon = 0 (voir plus bas) */
+                  printf("Goal !, score : %d\n", score);
+              }
+              else {
+                printf("Wrong\n");
+               
+                AfficherSprite(sprite2, x, y);  /*si faux, réaffiche le bac par dessus la premi!re selection et la deuxeieme*/
+                AfficherSprite(sprite2, selectionx, selectiony);
+              }
+              selection = 0; /*rénitialise les valeurs */
+              selectionx = 0; 
+              selectiony = 0;
+            }
+          }
+          x = x + marge + longueurImage;
+          i++;
+        }
+        x = marge;
+        y = y + marge + largeurImage;
+      }
+    } 
+    if(score == spritesize){ /* condition de victoire, return 0 pour montrer la fin*/
+      goon = 0;  
+    }
+/*if (ToucheEnAttente()){
+	if (Touche() == XK_Escape){
+		goon = 0;
 	}
+}*/
+}
+FermerGraphique();
+/*Victoire();*/
 }
 
-/*void grille2()
-{
-	char sprite[4][24] = { "./data/Image/carte1.png", "./data/Image/carte2.png", "./data/Image/carte3.png", "./data/Image/carte4.png"};
-	char randomize[8][50] = {"./data/Image/carte1.png", "./data/Image/carte2.png", "./data/Image/carte3.png", "./data/Image/carte4.png" "./data/Image/carte1.png", "./data/Image/carte2.png", "./data/Image/carte3.png", "./data/Image/carte4.png"};
-	int marge = 30;
-	int x = marge;
-	int y = 55;
-	struct card tableau[8][6];
-	while(goon == 1)
-	{
-		int random = 0;
-    	int i, j;
-
-    	for ( i = 0; i < 6; i++)
-    	{    
-    	  	for ( j = 0; j < 8; j++)
-    	  	{
-      			struct card current = {"", x, y, 0 };
-      			tableau[i][j] = current;
-    		  	DessinerRectangle(x, y,longueurImage, largeurImage);
-    		  	int sprite = ChargerSprite(randomize[random]);
-    		  	AfficherSprite(sprite, x, y);
-    		  	/*ChargerImage(randomize[random], x, y, x + longueurImage, y + largeurImage, longueurImage, largeurImage);*/
-     		 	/*x = x + marge +longueurImage;
-     		 	random = random + 1;
-     		 	x = x + marge +longueurImage;
-     		 	random = random + 1;
-    	  	}
-   	 		x = marge; 
-     		y = y + marge + largeurImage;
-     	}
+/*void Victoire(void){
+	InitialiserGraphique();
+	CreerFenetre(10,25,1280,720);
+	while (!SourisCliquee())
+    {
+      DessinerRectangle(950,563,100,63);
+      SourisCliquee();
+      if ( (_X >= 950) && (_X <= 1050) && (_Y >= 563) && (_Y <= 616) )
+      {
+      	FermerGraphique();
+        Menu();
+      }
     }
-}
-
-void grille3()
-{
-	char sprite[4][24] = { "./data/Image/carte1.png", "./data/Image/carte2.png", "./data/Image/carte3.png", "./data/Image/carte4.png"};
-	char randomize[8][50] = {"./data/Image/carte1.png", "./data/Image/carte2.png", "./data/Image/carte3.png", "./data/Image/carte4.png" "./data/Image/carte1.png", "./data/Image/carte2.png", "./data/Image/carte3.png", "./data/Image/carte4.png"};
-	int marge = 30;
-	int x = marge;
-	int y = 55;
-	struct card tableau[8][6];
-	while(goon == 1)
-	{
-		int random = 0;
-    	int i, j;
-
-    	for ( i = 0; i < 6; i++)
-    	{    
-    	  	for ( j = 0; j < 8; j++)
-    	  	{
-      			struct card current = {"", x, y, 0 };
-      			tableau[i][j] = current;
-    		  	DessinerRectangle(x, y,longueurImage, largeurImage);
-    		  	int sprite = ChargerSprite(randomize[random]);
-    		  	AfficherSprite(sprite, x, y);
-    		  	/*ChargerImage(randomize[random], x, y, x + longueurImage, y + largeurImage, longueurImage, largeurImage);*/
-     		 	/*x = x + marge +longueurImage;
-     		 	random = random + 1;
-     		 	x = x + marge +longueurImage;
-     		 	random = random + 1;
-    	  	}
-   	 		x = marge; 
-     		y = y + marge + largeurImage;
-     	}
-    }
-
 }*/
 
-
+/*void Retour(void)
+{
+	if (ToucheEnAttente()){
+    if (Touche() == XK_Escape)
+    {
+        FermerGraphique();
+        Menu();
+    }
+   }
+}*/
 
 int main(void)
 { 
 
-	InitialiserGraphique();   /*créer la fenetre */
-	CreerFenetre(100,25,1280,720);
-
-	menu();
+	
+	Menu();
 	
 
-Touche();
-FermerGraphique();
+	Touche();
+	FermerGraphique();
 
-return EXIT_SUCCESS;
 }

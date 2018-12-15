@@ -7,7 +7,7 @@
 #define largeurImage 95
 #define CYCLE 1000000L
 
-int main(void/*int cartex, int cartey*/)
+int Grille(void/*int cartex, int cartey*/)
 {
 
   srand(time(NULL));
