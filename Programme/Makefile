@@ -5,7 +5,7 @@ EXEC=grille
 all: $(EXEC)
 
 grille: grille.o menu.o
-		$(CC) -o grille grille.o menu.o 
+		$(CC) -o grille grille.o menu.o $(ARGS)
 
 grille.o: grille.c
 		$(CC) -o grille.o -c grille.c $(ARGS)

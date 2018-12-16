@@ -1,6 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
-#include<unistd.h>
+#include <unistd.h>
 #include<graph.h>
 #include<time.h>
 #define longueurImage 95
@@ -8,8 +8,9 @@
 #define marge 40
 #define CYCLE 1000000L
 
-void Grille(int cartex, int cartey)
+int Grille(void/*int cartex, int cartey*/)
 {
+
   srand(time(NULL));
 
   int seconde = 0; 
@@ -18,11 +19,16 @@ void Grille(int cartex, int cartey)
   unsigned long temps;
 
   int goon = 1;
- 
-  int spriterandsize = cartex * cartey,/*ça il a dit que ça ne servait a rien de le faire comme ça, il vaut mieux mettre directement les valeurs comme on connait d'avance la taille du tableau*/
+
+  
+
+  int cartex = 4,
+  cartey = 5,
+  spriterandsize = cartex * cartey,/*ça il a dit que ça ne servait a rien de le faire comme ça, il vaut mieux mettre directement les valeurs comme on connait d'avance la taille du tableau*/
   spritesize = spriterandsize/2,/*suite à au-dessus : Il préfère qu'on utilise préfère pas de nom full Majuscule et "_" pour les noms de variables*/
   MAX = spriterandsize,
   MIN = 0,
+  marge = 40, 
   x = marge,
   y = 70,
   i, 
@@ -30,11 +36,12 @@ void Grille(int cartex, int cartey)
 
   temps = Microsecondes() + CYCLE;
 
+  InitialiserGraphique();
   CreerFenetre(10,25,(longueurImage*cartey + marge*cartey + 20),(largeurImage*cartex + marge*cartex +55));
   ChargerImageFond("../Image/fond.png");
 
 
-    int sprite[21] = {  /*créer le tableau contenant les sprites*/
+    int sprite[10] = {  /*créer le tableau contenant les sprites*/
     ChargerSprite("../Image/carte1.png"),
     ChargerSprite("../Image/carte2.png"),
     ChargerSprite("../Image/carte3.png"),
@@ -45,19 +52,7 @@ void Grille(int cartex, int cartey)
     ChargerSprite("../Image/carte8.png"),
     ChargerSprite("../Image/carte9.png"),
     ChargerSprite("../Image/carte10.png"),
-    ChargerSprite("../Image/carte11.png"),
-    ChargerSprite("../Image/carte12.png"),
-    ChargerSprite("../Image/carte13.png"),
-    ChargerSprite("../Image/carte14.png"),
-    ChargerSprite("../Image/carte15.png"),
-    ChargerSprite("../Image/carte16.png"),
-    ChargerSprite("../Image/carte17.png"),
-    ChargerSprite("../Image/carte18.png"),
-    ChargerSprite("../Image/carte19.png"),
-    ChargerSprite("../Image/carte20.png"),
-    ChargerSprite("../Image/carte21.png")
     };
-
 
     int sprite2 = ChargerSprite("../Image/back.png");
 
@@ -90,15 +85,15 @@ void Grille(int cartex, int cartey)
     }
 
 
-    int grillerand[cartex][cartey];
+    int grillerand[4][5];
 
     int ligne, colonne;
     i = 0;
 
-    for ( ligne = 0; ligne < cartex; ligne++ )
+    for ( ligne = 0; ligne < 4; ligne++ )
     {
 
-      for (colonne = 0; colonne < cartey; colonne++)
+      for (colonne = 0; colonne < 5; colonne++)
       {
 
         grillerand[ligne][colonne] = spritesRand[i];
@@ -115,7 +110,8 @@ void Grille(int cartex, int cartey)
       y = y + marge + largeurImage;
 
     }
- int selection = 0, score = 0, selectionx = 0, selectiony = 0, ecran = 0;
+
+    int selection = 0, score = 0, selectionx = 0, selectiony = 0, ecran = 0;
 
     while (goon == 1)
     {
@@ -144,10 +140,10 @@ void Grille(int cartex, int cartey)
     {
 
 
-      for(ligne = 0; ligne < cartex; ligne++ )
+      for(ligne = 0; ligne < 4; ligne++ )
       {
       
-        for(colonne = 0; colonne < cartey; colonne++)
+        for(colonne = 0; colonne < 5; colonne++)
         {
           
           if ((_X >= x) && (_X <= x + longueurImage) && (_Y >= y) && (_Y <= y + largeurImage))
@@ -183,15 +179,45 @@ void Grille(int cartex, int cartey)
         y = y + marge + largeurImage;
       }
     } 
-    if(score == spritesize){ /* condition de victoire, return 0 pour montrer la fin*/
-      goon = 0;  
+    if(score == 10){ /* condition de victoire, return 0 pour montrer la fin*/
+      goon = 0;
+      return 0;
     }
-/*if (ToucheEnAttente()){
-  if (Touche() == XK_Escape){
-    goon = 0;
+
+    while (ToucheEnAttente()){ /*cheatmode, si on clique sur t affiche les cartes retournées*/
+      ChoisirEcran(2);
+      ChargerImageFond("../Image/fond.png");
+       i = 0;
+
+        for ( ligne = 0; ligne < 4; ligne++ )
+        {
+
+          for (colonne = 0; colonne < 5; colonne++)
+          {
+
+            AfficherSprite(spritesRand[i], x, y);
+
+            x = x + marge + longueurImage;
+
+            i++;
+          }
+
+          x = marge;
+
+          y = y + marge + largeurImage;
+
+        }
+      if (Touche() == XK_t){
+        if (ecran == 0) {
+          printf("screen cheat\n");
+          ecran = 1;
+          CopierZone(2,0,0,70,(longueurImage*cartey + marge*cartey + 20),(largeurImage*cartex + marge*cartex +55),0,70);
+        } else {
+          printf("screen game\n");
+          ecran = 0;
+          CopierZone(0,2,0,70,(longueurImage*cartey + marge*cartey + 20),(largeurImage*cartex + marge*cartex +55),0,70);
+        }
+      }
+    }
   }
-}*/
-}
-FermerGraphique();
-/*Victoire();*/
 }

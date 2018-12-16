@@ -1,6 +1,6 @@
 #ifndef H_GRILLE
 #define H_GRILLE
 
-int Grille(void);
+void Grille(int cartex, int cartey);
 
 #endif
