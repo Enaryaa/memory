@@ -22,8 +22,6 @@ void Regle(void); /*affiche une fenetre avec les règles du jeu*/
 void Grille(int cartex, int cartey); /*initialise la grille de jeu en fonction
  de la difficulté avec des tailles différentes*/
 
-
-
 void Regle(void){
     goon = 4;
     while(goon == 4)
@@ -49,7 +47,6 @@ void Facile()
     FermerGraphique();
     InitialiserGraphique(); 
     Grille(4,5);
-    
 }
 
 void Normal()
@@ -58,7 +55,6 @@ void Normal()
     FermerGraphique();
     InitialiserGraphique();
     Grille(5,6);
-    
 }
 
 void Difficile(){
@@ -66,8 +62,6 @@ void Difficile(){
     FermerGraphique();
     InitialiserGraphique();
     Grille(5,8);
-    
-    
 }
 
 void Menu()
@@ -75,19 +69,15 @@ void Menu()
 
     InitialiserGraphique();   /*créer la fenetre */
     CreerFenetre(10,25,1280,720);
-
     ChargerImageFond("../Image/projet.png"); 
-
     /*DessinerRectangle(770,350,63,63);
     DessinerRectangle(620,445,63,63);
     DessinerRectangle(810,555,63,63);
     DessinerRectangle(159,294,245,242);*/
     SourisPosition();
         /*permet de connaitre la position actuelle du curseur */
-
     while (goon == 0)
     {
-    
         SourisCliquee();
         if ( (_X >= 770) && (_X <= 833) && (_Y >= 350) && (_Y <= 413) ) /*si l'utilisateur clique dans cette surface 
         (qui correspond a un bouton) alors on ferme la fenetre actuelle pour en ouvrir une autre contenant les différentes grilles de jeu*/
@@ -107,10 +97,8 @@ void Menu()
             Regle();
             SourisCliquee();
         }
-        /*else if*/
     }
 }
-
 
 /*void Victoire(void){
     InitialiserGraphique();
