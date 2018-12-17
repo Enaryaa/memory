@@ -55,7 +55,7 @@ void Grille(int cartex, int cartey)
     };
 
 
-    int sprite2 = ChargerSprite("../Image/back.png");
+    int backcard = ChargerSprite("../Image/back.png");
 
     int spritesRand[spriterandsize]; /*tableau destiné a accueillir les valeurs random de sprite*/
     
@@ -68,7 +68,6 @@ void Grille(int cartex, int cartey)
     for (i = 0; i < spritesize; i++)
     {  /*boucle dans le tab des sprites pour garder le sprite courant*/
       int current = sprite[i];
-      printf("sprite %d : %d\n", i, sprite[i] );
       for (j = 0; j < 2; ) {  /*sort de la boucle si le currentsprite a été placé 2fois dans le tab rand*/
         int ran = (rand() % (MAX - MIN) + MIN);
         if (spritesRand[ran] == 0)
@@ -87,8 +86,8 @@ void Grille(int cartex, int cartey)
     {
       for (colonne = 0; colonne < cartey; colonne++)
       {
-        grillerand[ligne][colonne] = spritesRand[i];
-        AfficherSprite(sprite2, x, y);
+        /*grillerand[ligne][colonne] = spritesRand[i];*/
+        AfficherSprite(backcard, x, y);
         x = x + marge + longueurImage;
         i++;
       }
@@ -96,7 +95,7 @@ void Grille(int cartex, int cartey)
       y = y + marge + largeurImage;
     }
 
-    int selection = 0, score = 0, selectionx = 0, selectiony = 0, ecran = 0;
+    int selection = 0, score = 0, selectionx = 0, selectiony = 0;
 
     while (goon == 1)
     {
@@ -110,7 +109,6 @@ void Grille(int cartex, int cartey)
       EcrireTexte(70,30,buf,1);
       CopierZone(1,0,0,0,500,70,0,0);
       ChoisirEcran(0);
-      printf("%d\n", seconde);
       temps = Microsecondes() + CYCLE;
     }
 
@@ -128,7 +126,6 @@ void Grille(int cartex, int cartey)
           {
             AfficherSprite(spritesRand[i],x, y);
             sleep(1); /*mise en veille du programme de 1sec pour la seconde selection, permet de le voir*/
-            printf("clique %d,%d : %d\n", x, y, spritesRand[i] );
             if(selection == 0){ /*stocke la valeur du clique dans selection, ses coordonnées dans selectionx et selectiony*/
               selection = spritesRand[i];
               selectionx = x;
@@ -136,13 +133,13 @@ void Grille(int cartex, int cartey)
             }
             else {
               if(selection == spritesRand[i] && (selectionx != x || selectiony != y) ){ /*si le second clique rempli ses conditions alors on a trouvé une paire*/
-                  score++;  /*le score s'incrémente jusqu'a avoir trouvé les 10paires (ici) donc si score == 10, goon = 0 (voir plus bas) */
-                  printf("Goal !, score : %d\n", score);
+                  /*le score s'incrémente jusqu'a avoir trouvé les 10paires (ici) donc si score == 10, goon = 0 (voir plus bas) */
+                  score++;
+
               }
               else {
-                printf("Wrong\n");
-                AfficherSprite(sprite2, x, y);  /*si faux, réaffiche le bac par dessus la premi!re selection et la deuxeieme*/
-                AfficherSprite(sprite2, selectionx, selectiony);
+                AfficherSprite(backcard, x, y);  /*si faux, réaffiche le bac par dessus la premi!re selection et la deuxeieme*/
+                AfficherSprite(backcard, selectionx, selectiony);
               }
               selection = 0; /*rénitialise les valeurs */
               selectionx = 0; 
@@ -156,15 +153,15 @@ void Grille(int cartex, int cartey)
         y = y + marge + largeurImage;
       }
     } 
-    if(score == spritesize){ /* condition de victoire, return 0 pour montrer la fin*/
+    if(score == spritesize){ /* condition de victoire*/
       goon = 0;  
     }
-/*if (ToucheEnAttente()){
-  if (Touche() == XK_Escape){
+if (ToucheEnAttente()){
+  if (Touche() == XK_q){
     goon = 0;
   }
-}*/
+}
 }
 FermerGraphique();
-/*Victoire();*/
 }
+
