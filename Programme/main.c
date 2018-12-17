@@ -100,7 +100,7 @@ void Difficile(){
 void Victoire(void){
     InitialiserGraphique();
     CreerFenetre(10,25,1280,720); 
-    ChargerImageFond("../Image/fond.png");
+    ChargerImageFond("../Image/victoire.png");
     while (!SourisCliquee())
     {
       DessinerRectangle(950,563,100,63);
