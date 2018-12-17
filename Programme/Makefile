@@ -1,17 +1,18 @@
 CC=gcc
 ARGS=-lgraph
-EXEC=grille
+EXEC=memory
+CFLAGS=-g
 
 all: $(EXEC)
 
-grille: grille.o main.o
-		$(CC) -o grille grille.o main.o $(ARGS)
+memory: grille.o main.o
+		$(CC) $(CFLAGS) -o memory grille.o main.o $(ARGS)
 
 grille.o: grille.c
-		$(CC) -o grille.o -c grille.c $(ARGS)
+		$(CC) $(CFLAGS) -o grille.o -c grille.c 
 
 main.o: main.c grille.h 
-		$(CC) -o main.o -c main.c $(ARGS)
+		$(CC) $(CFLAGS) -o main.o -c main.c 
 
 clean:
 		rm -rf *.o

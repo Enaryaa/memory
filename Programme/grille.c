@@ -16,7 +16,6 @@ void Grille(int cartex, int cartey)
   char buf[100];
   unsigned long temps;
   int goon = 1;
- 
   int spriterandsize = cartex * cartey,
   spritesize = spriterandsize/2,
   MAX = spriterandsize,
@@ -25,8 +24,8 @@ void Grille(int cartex, int cartey)
   y = 70,
   i, 
   j;
-
   temps = Microsecondes() + CYCLE;
+  
   CreerFenetre(10,25,(longueurImage*cartey + marge*cartey + 20),(largeurImage*cartex + marge*cartex +55));
   ChargerImageFond("../Image/fond.png");
 
@@ -86,7 +85,7 @@ void Grille(int cartex, int cartey)
     {
       for (colonne = 0; colonne < cartey; colonne++)
       {
-        /*grillerand[ligne][colonne] = spritesRand[i];*/
+        grillerand[ligne][colonne] = spritesRand[i];
         AfficherSprite(backcard, x, y);
         x = x + marge + longueurImage;
         i++;
@@ -96,9 +95,43 @@ void Grille(int cartex, int cartey)
     }
 
     int selection = 0, score = 0, selectionx = 0, selectiony = 0;
+    int tempo = 0;
+        ChoisirEcran(2);
+        ChargerImageFond("../Image/fond.png");
+        ChoisirEcran(0);
 
     while (goon == 1)
     {
+      if (ToucheEnAttente() && Touche() == XK_t && tempo == 0)
+      {
+        int ligne, colonne;
+        tempo = 1;
+        CopierZone(0,3,0,70,(longueurImage*cartey + marge*cartey),(largeurImage*cartex + marge*cartex),0,70);
+        ChoisirEcran(2);
+        x = marge;
+        y = 70;
+          for ( ligne = 0; ligne < cartex; ligne++ )
+          {
+            for (colonne = 0; colonne < cartey; colonne++)
+            {
+              AfficherSprite(grillerand[ligne][colonne], x, y);
+              x = x + marge + longueurImage;
+            }
+            x = marge;
+            y = y + marge + largeurImage;
+          }
+          CopierZone(2,0,0,70,(longueurImage*cartey + marge*cartey),(largeurImage*cartex + marge*cartex),0,70);
+
+        while (tempo == 1)
+        {
+          if (ToucheEnAttente() && Touche() == XK_t)
+          {
+            tempo = 0;
+          }
+        }
+        CopierZone(3,0,0,70,(longueurImage*cartey + marge*cartey),(largeurImage*cartex + marge*cartex),0,70);
+      }
+
     if (Microsecondes()>temps)
     {
       seconde++;
@@ -133,9 +166,7 @@ void Grille(int cartex, int cartey)
             }
             else {
               if(selection == spritesRand[i] && (selectionx != x || selectiony != y) ){ /*si le second clique rempli ses conditions alors on a trouvé une paire*/
-                  /*le score s'incrémente jusqu'a avoir trouvé les 10paires (ici) donc si score == 10, goon = 0 (voir plus bas) */
-                  score++;
-
+                  score++;  /*le score s'incrémente jusqu'a avoir trouvé les 10paires (ici) donc si score == 10, goon = 0 (voir plus bas) */
               }
               else {
                 AfficherSprite(backcard, x, y);  /*si faux, réaffiche le bac par dessus la premi!re selection et la deuxeieme*/
@@ -153,15 +184,12 @@ void Grille(int cartex, int cartey)
         y = y + marge + largeurImage;
       }
     } 
-    if(score == spritesize){ /* condition de victoire*/
+    if(score == spritesize){ /* condition de victoire, return 0 pour montrer la fin*/
       goon = 0;  
     }
-if (ToucheEnAttente()){
-  if (Touche() == XK_q){
+if (ToucheEnAttente() && Touche() == XK_q){
     goon = 0;
   }
 }
-}
 FermerGraphique();
 }
-
