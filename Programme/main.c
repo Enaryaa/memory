@@ -21,7 +21,6 @@ void Difficile(void);
 void Regle(void); /*affiche une fenetre avec les règles du jeu*/
 void Grille(int cartex, int cartey); /*initialise la grille de jeu en fonction
  de la difficulté avec des tailles différentes*/
-/*void Retour(void);*/
 
 int main(void){ 
     InitialiserGraphique();   /*créer la fenetre */
@@ -73,31 +72,23 @@ void Regle(void){
 
 void Facile(){
     /*grille facile*/
-    /*FermerGraphique();
-    InitialiserGraphique(); */
     Grille(4,5);
     Victoire();
 }
 
 void Normal(){
     /*grille normal*/
-    /*FermerGraphique();
-    InitialiserGraphique();*/
     Grille(5,6);
     Victoire();
 }
 
 void Difficile(){
     /*grille difficile*/
-    /*FermerGraphique();
-    InitialiserGraphique();*/
     Grille(5,8);
     Victoire();
 }
 
 void Victoire(void){
-    /*InitialiserGraphique();
-    CreerFenetre(10,25,1400,720); */
     while (!SourisCliquee())
     {
       ChargerImageFond("../Image/victoire.png");

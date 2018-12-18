@@ -14,6 +14,13 @@ grille.o: grille.c
 main.o: main.c grille.h 
 		$(CC) $(CFLAGS) -o main.o -c main.c 
 
+run : 
+	./$(EXEC)
+
+./ : run 
+		./$(EXEC)
+
+
 clean:
 		rm -rf *.o
 

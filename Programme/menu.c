@@ -183,7 +183,8 @@ void Grille(int cartex, int cartey)
       y = y + marge + largeurImage;
     }
 
-    int selection = 0, score = 0, selectionx = 0, selectiony = 0, ecran = 0;
+    int selection = 0, score = 0, selectionx = 0, selectiony = 0;
+    bool statut = true; 
 
     while (goon == 1)
     {
@@ -211,7 +212,7 @@ void Grille(int cartex, int cartey)
       {
         for(colonne = 0; colonne < cartey; colonne++)
         {
-          if ((_X >= x) && (_X <= x + longueurImage) && (_Y >= y) && (_Y <= y + largeurImage))
+          if (((_X >= x) && (_X <= x + longueurImage)) && ((_Y >= y) && (_Y <= y + largeurImage)))
           {
             AfficherSprite(spritesRand[i],x, y);
             sleep(1); /*mise en veille du programme de 1sec pour la seconde selection, permet de le voir*/
@@ -222,18 +223,22 @@ void Grille(int cartex, int cartey)
               selectiony = y;
             }
             else {
-              if(selection == spritesRand[i] && (selectionx != x || selectiony != y) ){ /*si le second clique rempli ses conditions alors on a trouvé une paire*/
-                  score++;  /*le score s'incrémente jusqu'a avoir trouvé les 10paires (ici) donc si score == 10, goon = 0 (voir plus bas) */
+              /*if(selection == spritesRand[i] && (selectionx != x || selectiony != y) ){ 
+                  score++;  
                   printf("Goal !, score : %d\n", score);
-              }
-              else {
+              }*/
+              if (selection != spritesRand[i]){
                 printf("Wrong\n");
                 AfficherSprite(sprite2, x, y);  /*si faux, réaffiche le bac par dessus la premi!re selection et la deuxeieme*/
                 AfficherSprite(sprite2, selectionx, selectiony);
               }
+              else {
+                score++;
+                 printf("Goal !, score : %d\n", score);
+              }
               selection = 0; /*rénitialise les valeurs */
-              selectionx = 0; 
-              selectiony = 0;
+              /*selectionx = 0; 
+              selectiony = 0;*/
             }
           }
           x = x + marge + longueurImage;

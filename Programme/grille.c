@@ -28,7 +28,7 @@ void Grille(int cartex, int cartey)
   /*(longueurImage*cartey + marge*cartey + 20),(largeurImage*cartex + marge*cartex +55));*/
   ChargerImageFond("../Image/jeu2.png");
 
-    int sprite[21] = {  
+    int sprite[20] = {  
       ChargerSprite("../Image/carte1.png"),
       ChargerSprite("../Image/carte2.png"),
       ChargerSprite("../Image/carte3.png"),
@@ -49,11 +49,10 @@ void Grille(int cartex, int cartey)
       ChargerSprite("../Image/carte18.png"),
       ChargerSprite("../Image/carte19.png"),
       ChargerSprite("../Image/carte20.png"),
-      ChargerSprite("../Image/carte21.png")
     };
 
     int backcard = ChargerSprite("../Image/back.png");
-    int spritesRand[spriterandsize]; /*tableau destiné a accueillir les valeurs random de sprite*/
+    int spritesRand[40]; /*tableau destiné a accueillir les valeurs random de sprite*/
     
     for (i = 0; i < spriterandsize; i ++)
     {     /*incremente le tableau random de 0*/
@@ -74,7 +73,7 @@ void Grille(int cartex, int cartey)
       }
     }
 
-    int grillerand[cartex][cartey];
+    int grillerand[5][8];
     int ligne, colonne;
     i = 0;
 
