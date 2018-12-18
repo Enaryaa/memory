@@ -25,9 +25,8 @@ void Grille(int cartex, int cartey)
   i, 
   j;
   temps = Microsecondes() + CYCLE;
-  
-  CreerFenetre(10,25,(longueurImage*cartey + marge*cartey + 20),(largeurImage*cartex + marge*cartex +55));
-  ChargerImageFond("../Image/fond.png");
+  /*(longueurImage*cartey + marge*cartey + 20),(largeurImage*cartex + marge*cartex +55));*/
+  ChargerImageFond("../Image/jeu2.png");
 
     int sprite[21] = {  
       ChargerSprite("../Image/carte1.png"),
@@ -53,9 +52,7 @@ void Grille(int cartex, int cartey)
       ChargerSprite("../Image/carte21.png")
     };
 
-
     int backcard = ChargerSprite("../Image/back.png");
-
     int spritesRand[spriterandsize]; /*tableau destiné a accueillir les valeurs random de sprite*/
     
     for (i = 0; i < spriterandsize; i ++)
@@ -191,5 +188,4 @@ if (ToucheEnAttente() && Touche() == XK_q){
     goon = 0;
   }
 }
-FermerGraphique();
 }

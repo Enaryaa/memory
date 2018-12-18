@@ -14,18 +14,18 @@ int goon = 0;
 
 
 void Menu(void);  /*affiche le menu principal*/
+void Victoire(void);
 void Facile(void); /*permet de selectionner la grille facile*/
 void Normal(void); 
 void Difficile(void);
 void Regle(void); /*affiche une fenetre avec les règles du jeu*/
-void Victoire(void);
 void Grille(int cartex, int cartey); /*initialise la grille de jeu en fonction
  de la difficulté avec des tailles différentes*/
 /*void Retour(void);*/
 
 int main(void){ 
     InitialiserGraphique();   /*créer la fenetre */
-    CreerFenetre(10,25,1280,720);
+    CreerFenetre(10,25,1400,720);
     Menu();
     Touche();
     FermerGraphique();
@@ -63,10 +63,8 @@ void Regle(void){
     while (!SourisCliquee())
     {
       ChargerImageFond("../Image/regle22.png");
-      DessinerRectangle(950,563,100,63);
       SourisCliquee();
-      if ( (_X >= 950) && (_X <= 1050) && (_Y >= 563) && (_Y <= 616) )
-        /*bouton a ajouter en sprite*/
+      if ( (_X >= 1025) && (_X <= 1095) && (_Y >= 645) && (_Y <= 715) )
       {
         Menu();
       }
@@ -75,51 +73,38 @@ void Regle(void){
 
 void Facile(){
     /*grille facile*/
-    FermerGraphique();
-    InitialiserGraphique(); 
+    /*FermerGraphique();
+    InitialiserGraphique(); */
     Grille(4,5);
     Victoire();
 }
 
 void Normal(){
     /*grille normal*/
-    FermerGraphique();
-    InitialiserGraphique();
+    /*FermerGraphique();
+    InitialiserGraphique();*/
     Grille(5,6);
     Victoire();
 }
 
 void Difficile(){
     /*grille difficile*/
-    FermerGraphique();
-    InitialiserGraphique();
+    /*FermerGraphique();
+    InitialiserGraphique();*/
     Grille(5,8);
     Victoire();
 }
 
 void Victoire(void){
-    InitialiserGraphique();
-    CreerFenetre(10,25,1280,720); 
-    ChargerImageFond("../Image/victoire.png");
+    /*InitialiserGraphique();
+    CreerFenetre(10,25,1400,720); */
     while (!SourisCliquee())
     {
-      DessinerRectangle(950,563,100,63);
-      if(SourisCliquee()){
-      if ( (_X >= 950) && (_X <= 1050) && (_Y >= 563) && (_Y <= 616) )
+      ChargerImageFond("../Image/victoire.png");
+      SourisCliquee();
+      if ( (_X >= 1010) && (_X <= 1210) && (_Y >= 545) && (_Y <= 645) )
       {
         Menu();
       }
-    }
   }
 }
-
-/*void Retour(void)
-{
-    if (ToucheEnAttente()){
-    if (Touche() == XK_Escape)
-    {
-        FermerGraphique();
-        Menu();
-    }
-   }
-}*/
