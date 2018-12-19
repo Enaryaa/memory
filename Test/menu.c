@@ -4,11 +4,14 @@
 #include<math.h>
 #include<time.h>
 #include<unistd.h>
+#include <stdbool.h>
 
 #define longueurImage 95
 #define largeurImage 95
 #define marge 40
 #define CYCLE 1000000L
+#define True 1
+#define False 0
 int goon = 0;
 
 
@@ -184,7 +187,13 @@ void Grille(int cartex, int cartey)
     }
 
     int selection = 0, score = 0, selectionx = 0, selectiony = 0;
-    bool statut = true; 
+    int spritetrouve[20], k, dejatrouve = 0;
+    
+     for (k = 0; k < 20; k++){
+      spritetrouve[k] = 0;
+    }
+
+
 
     while (goon == 1)
     {
@@ -206,6 +215,8 @@ void Grille(int cartex, int cartey)
     x = marge;
     y = 70;
 
+
+   
     if(SourisCliquee())
     {
       for(ligne = 0; ligne < cartex; ligne++ )
@@ -214,31 +225,44 @@ void Grille(int cartex, int cartey)
         {
           if (((_X >= x) && (_X <= x + longueurImage)) && ((_Y >= y) && (_Y <= y + largeurImage)))
           {
+            for(k = 0; k < 20; k++){
+              if (spritetrouve[k] == spritesRand[i]) {
+                dejatrouve = 1;
+                printf("already in it\n");
+              }
+            }
             AfficherSprite(spritesRand[i],x, y);
             sleep(1); /*mise en veille du programme de 1sec pour la seconde selection, permet de le voir*/
             printf("clique %d,%d : %d\n", x, y, spritesRand[i] );
-            if(selection == 0){ /*stocke la valeur du clique dans selection, ses coordonnées dans selectionx et selectiony*/
+            printf("deja trouvé : %d\n", dejatrouve);
+            if(selection == 0 && dejatrouve == 0){ /*stocke la valeur du clique dans selection, ses coordonnées dans selectionx et selectiony*/
               selection = spritesRand[i];
               selectionx = x;
               selectiony = y;
             }
             else {
-              /*if(selection == spritesRand[i] && (selectionx != x || selectiony != y) ){ 
+              if(selection == spritesRand[i] && (selectionx != x || selectiony != y)){ 
                   score++;  
+                  for (k=0; k < 20;  k++){
+                    if(spritetrouve[k] == 0){
+                    spritetrouve[k] = selection;
+                    break;
+                    }
+                  }
                   printf("Goal !, score : %d\n", score);
-              }*/
-              if (selection != spritesRand[i]){
+                  printf("numero deja trouvé : %d\n", spritetrouve[i]);
+              }
+       
+            
+              else {
+                if (dejatrouve == 0){
                 printf("Wrong\n");
-                AfficherSprite(sprite2, x, y);  /*si faux, réaffiche le bac par dessus la premi!re selection et la deuxeieme*/
+                AfficherSprite(sprite2, x, y);
+                }  /*si faux, réaffiche le bac par dessus la premi!re selection et la deuxeieme*/
                 AfficherSprite(sprite2, selectionx, selectiony);
               }
-              else {
-                score++;
-                 printf("Goal !, score : %d\n", score);
-              }
               selection = 0; /*rénitialise les valeurs */
-              /*selectionx = 0; 
-              selectiony = 0;*/
+              dejatrouve = 0;
             }
           }
           x = x + marge + longueurImage;
@@ -246,12 +270,11 @@ void Grille(int cartex, int cartey)
         }
         x = marge;
         y = y + marge + largeurImage;
-      }
-    } 
-    if(score == spritesize){ /* condition de victoire, return 0 pour montrer la fin*/
+      } 
+    }
+    if(score == spritesize){ /* condition de victoire*/
       goon = 0;  
     }
-Retour();
 }
 FermerGraphique();
 Victoire();

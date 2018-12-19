@@ -48,7 +48,7 @@ void Grille(int cartex, int cartey)
       ChargerSprite("../Image/carte17.png"),
       ChargerSprite("../Image/carte18.png"),
       ChargerSprite("../Image/carte19.png"),
-      ChargerSprite("../Image/carte20.png"),
+      ChargerSprite("../Image/carte20.png")
     };
 
     int backcard = ChargerSprite("../Image/back.png");
@@ -95,6 +95,12 @@ void Grille(int cartex, int cartey)
         ChoisirEcran(2);
         ChargerImageFond("../Image/fond.png");
         ChoisirEcran(0);
+
+    int spritetrouve[20], k, dejatrouve = 0;
+    
+    for (k = 0; k < 20; k++){
+      spritetrouve[k] = 0;
+    }
 
     while (goon == 1)
     {
@@ -153,9 +159,14 @@ void Grille(int cartex, int cartey)
         {
           if ((_X >= x) && (_X <= x + longueurImage) && (_Y >= y) && (_Y <= y + largeurImage))
           {
+            for(k = 0; k < 20; k++){
+              if (spritetrouve[k] == spritesRand[i]) {
+                dejatrouve = 1;
+              }
+            }
             AfficherSprite(spritesRand[i],x, y);
             sleep(1); /*mise en veille du programme de 1sec pour la seconde selection, permet de le voir*/
-            if(selection == 0){ /*stocke la valeur du clique dans selection, ses coordonnées dans selectionx et selectiony*/
+            if(selection == 0 && dejatrouve == 0){ /*stocke la valeur du clique dans selection, ses coordonnées dans selectionx et selectiony*/
               selection = spritesRand[i];
               selectionx = x;
               selectiony = y;
@@ -163,14 +174,21 @@ void Grille(int cartex, int cartey)
             else {
               if(selection == spritesRand[i] && (selectionx != x || selectiony != y) ){ /*si le second clique rempli ses conditions alors on a trouvé une paire*/
                   score++;  /*le score s'incrémente jusqu'a avoir trouvé les 10paires (ici) donc si score == 10, goon = 0 (voir plus bas) */
+                  for ( k = 0; k < 20; k++){
+                    if (spritetrouve[k] == 0){
+                      spritetrouve[k] = selection;
+                      break;
+                    }
+                  }
               }
               else {
+                if (dejatrouve == 0){
                 AfficherSprite(backcard, x, y);  /*si faux, réaffiche le bac par dessus la premi!re selection et la deuxeieme*/
+                }
                 AfficherSprite(backcard, selectionx, selectiony);
               }
               selection = 0; /*rénitialise les valeurs */
-              selectionx = 0; 
-              selectiony = 0;
+              dejatrouve = 0;
             }
           }
           x = x + marge + longueurImage;
