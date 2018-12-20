@@ -14,7 +14,7 @@ int goon = 0;
 
 
 void Menu(void);  /*affiche le menu principal*/
-void Victoire(void);
+void Victoire(void); /* apres que le jeu soit fini, affiche une fenetre de victoire qui ramène au menu principal*/
 void Facile(void); /*permet de selectionner la grille facile*/
 void Normal(void); 
 void Difficile(void);
